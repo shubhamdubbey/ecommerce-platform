@@ -1,0 +1,10 @@
+{
+  "type": "record", "name": "InventoryReserved", "namespace": "com.shop.events.inventory",
+  "fields": [
+    {"name": "metadata",      "type": "com.shop.events.common.EventMetadata"},
+    {"name": "orderId",       "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "reservationId", "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "items",         "type": {"type": "array", "items": "com.shop.events.common.StockItem"}},
+    {"name": "expiresAt",     "type": {"type": "long", "logicalType": "timestamp-millis"}}
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "record",
+  "name": "StockItem",
+  "namespace": "com.shop.events.common",
+  "fields": [
+    {"name": "sku", "type": "string"},
+    {"name": "qty", "type": "int"}
+  ]
+}
