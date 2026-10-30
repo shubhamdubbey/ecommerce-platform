@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "OrderCreated",
+  "namespace": "com.shop.events.order",
+  "doc": "Published by the Order Service when an order has been validated, priced and saved.",
+  "fields": [
+    {"name": "metadata",   "type": "com.shop.events.common.EventMetadata"},
+    {"name": "orderId",    "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "customerId", "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "items",      "type": {"type": "array", "items": "com.shop.events.common.OrderItem"}},
+    {"name": "grandTotal", "type": {"type": "bytes", "logicalType": "decimal", "precision": 12, "scale": 2}},
+    {"name": "currency",   "type": "string"},
+    {"name": "couponCode", "type": ["null", "string"], "default": null}
+  ]
+}

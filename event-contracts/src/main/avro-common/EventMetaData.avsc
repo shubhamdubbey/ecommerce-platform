@@ -1,0 +1,14 @@
+{
+  "type": "record",
+  "name": "EventMetadata",
+  "namespace": "com.shop.events.common",
+  "doc": "Standard header carried by every event.",
+  "fields": [
+    {"name": "eventId",       "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "eventType",     "type": "string"},
+    {"name": "occurredAt",    "type": {"type": "long", "logicalType": "timestamp-millis"}},
+    {"name": "correlationId", "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "causationId",   "type": ["null", {"type": "string", "logicalType": "uuid"}], "default": null},
+    {"name": "producer",      "type": "string"}
+  ]
+}

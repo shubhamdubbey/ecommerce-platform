@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "name": "OrderItem",
+  "namespace": "com.shop.events.common",
+  "fields": [
+    {"name": "sku",       "type": "string"},
+    {"name": "qty",       "type": "int"},
+    {"name": "unitPrice", "type": {"type": "bytes", "logicalType": "decimal", "precision": 12, "scale": 2}}
+  ]
+}
