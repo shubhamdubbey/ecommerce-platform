@@ -1,0 +1,8 @@
+{
+  "type": "record", "name": "OrderExpired", "namespace": "com.shop.events.order",
+  "fields": [
+    {"name": "metadata", "type": "com.shop.events.common.EventMetadata"},
+    {"name": "orderId",  "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "reason",   "type": "string"}
+  ]
+}

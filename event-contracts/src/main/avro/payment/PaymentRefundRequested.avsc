@@ -1,0 +1,10 @@
+{
+  "type": "record", "name": "PaymentRefundRequested", "namespace": "com.shop.events.payment",
+  "fields": [
+    {"name": "metadata",  "type": "com.shop.events.common.EventMetadata"},
+    {"name": "orderId",   "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "paymentId", "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "amount",    "type": {"type": "bytes", "logicalType": "decimal", "precision": 12, "scale": 2}},
+    {"name": "reason",    "type": "string"}
+  ]
+}

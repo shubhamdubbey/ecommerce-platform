@@ -1,0 +1,10 @@
+{
+  "type": "record", "name": "PaymentFailed", "namespace": "com.shop.events.payment",
+  "fields": [
+    {"name": "metadata",   "type": "com.shop.events.common.EventMetadata"},
+    {"name": "orderId",    "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "paymentId",  "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "reasonCode", "type": "string"},
+    {"name": "retryable",  "type": "boolean"}
+  ]
+}

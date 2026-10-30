@@ -1,0 +1,9 @@
+{
+  "type": "record", "name": "InventoryReleased", "namespace": "com.shop.events.inventory",
+  "fields": [
+    {"name": "metadata",      "type": "com.shop.events.common.EventMetadata"},
+    {"name": "orderId",       "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "reservationId", "type": {"type": "string", "logicalType": "uuid"}},
+    {"name": "reason",        "type": "string"}
+  ]
+}
