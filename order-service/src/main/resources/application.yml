@@ -27,12 +27,12 @@ management:
       show-details: always
       probes:
         enabled: true
-  app:
+app:
     order:
       expiry-minutes: 30
     dev-endpoints:
       enabled: true
 
-  logging:
+logging:
     level:
       org.hibernate.SQL: DEBUG
