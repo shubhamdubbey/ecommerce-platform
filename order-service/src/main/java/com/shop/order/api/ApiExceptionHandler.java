@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.shop.order.idempotency.IdempotencyKeyReuseException;
+import org.springframework.http.HttpStatusCode;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -14,6 +16,11 @@ public class ApiExceptionHandler {
     @ExceptionHandler(OrderNotFoundException.class)
     public ProblemDetail notFound(OrderNotFoundException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(IdempotencyKeyReuseException.class)
+    public ProblemDetail keyReuse(IdempotencyKeyReuseException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(422), ex.getMessage());
     }
 
     @ExceptionHandler(IllegalOrderTransitionException.class)

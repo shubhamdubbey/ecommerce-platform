@@ -61,9 +61,9 @@ public class Order {
         // required by JPA
     }
 
-    public static Order create(UUID customerId, String currency, Instant expiresAt) {
+    public static Order create(UUID id, UUID customerId, String currency, Instant expiresAt) {
         Order order = new Order();
-        order.id = UUID.randomUUID();
+        order.id = id;
         order.customerId = customerId;
         order.currency = currency;
         order.status = OrderStatus.CREATED;

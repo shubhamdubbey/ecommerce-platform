@@ -28,11 +28,13 @@ management:
       probes:
         enabled: true
 app:
-    order:
-      expiry-minutes: 30
-    dev-endpoints:
-      enabled: true
+  order:
+    expiry-minutes: 30
+  idempotency:
+    ttl-hours: 24
+  dev-endpoints:
+    enabled: true
 
 logging:
-    level:
-      org.hibernate.SQL: DEBUG
+  level:
+    org.hibernate.SQL: DEBUG
