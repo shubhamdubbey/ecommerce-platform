@@ -19,7 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
-
+import com.shop.order.messaging.OrderEvents;
+import com.shop.order.messaging.Topics;
+import com.shop.order.outbox.OutboxWriter;
+import com.shop.order.web.CorrelationContext;
 @Service
 public class OrderService {
 
@@ -30,14 +33,17 @@ public class OrderService {
     private final PriceCalculator priceCalculator;
     private final long expiryMinutes;
     private final long keyTtlHours;
+    private final OutboxWriter outboxWriter;
 
     public OrderService(OrderRepository orderRepository,
                         IdempotencyKeyRepository idempotencyKeys,
+                        OutboxWriter outboxWriter,
                         PriceCalculator priceCalculator,
                         @Value("${app.order.expiry-minutes}") long expiryMinutes,
                         @Value("${app.idempotency.ttl-hours}") long keyTtlHours) {
         this.orderRepository = orderRepository;
         this.idempotencyKeys = idempotencyKeys;
+        this.outboxWriter = outboxWriter;
         this.priceCalculator = priceCalculator;
         this.expiryMinutes = expiryMinutes;
         this.keyTtlHours = keyTtlHours;
@@ -63,6 +69,9 @@ public class OrderService {
             order.addItem(item.sku(), item.qty(), priceCalculator.unitPrice(item.sku()));
         }
         orderRepository.saveAndFlush(order);
+
+        outboxWriter.write(order.getId(), Topics.ORDER_CREATED, order.getId().toString(),
+                OrderEvents.orderCreated(order, CorrelationContext.currentOrNew()));
 
         log.info("Order {} created for customer {} total {} {} (key {})",
                 order.getId(), order.getCustomerId(), order.getGrandTotal(),
