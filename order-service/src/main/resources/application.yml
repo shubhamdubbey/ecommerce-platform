@@ -16,6 +16,25 @@ spring:
       hibernate.jdbc.time_zone: UTC
   flyway:
     enabled: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    admin:
+      fail-fast: true
+    producer:
+      acks: all
+      compression-type: lz4
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      properties:
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+        linger.ms: 5
+        request.timeout.ms: 10000
+        delivery.timeout.ms: 30000
+        max.block.ms: 10000
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
+        auto.register.schemas: true
+        avro.use.logical.type.converters: true
 
 management:
   endpoints:
@@ -27,14 +46,21 @@ management:
       show-details: always
       probes:
         enabled: true
+
 app:
   order:
     expiry-minutes: 30
   idempotency:
     ttl-hours: 24
+  outbox:
+    poll-interval-ms: 500
+    batch-size: 100
+    send-timeout-seconds: 15
   dev-endpoints:
     enabled: true
 
 logging:
+  pattern:
+    level: "%5p [%X{correlationId:-}]"
   level:
     org.hibernate.SQL: DEBUG
