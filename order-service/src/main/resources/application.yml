@@ -16,33 +16,6 @@ spring:
       hibernate.jdbc.time_zone: UTC
   flyway:
     enabled: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info
-  endpoint:
-    health:
-      show-details: always
-      probes:
-        enabled: true
-app:
-  outbox:
-    poll-interval-ms: 500
-    batch-size: 100
-    send-timeout-seconds: 15
-  order:
-    expiry-minutes: 30
-  idempotency:
-    ttl-hours: 24
-  dev-endpoints:
-    enabled: true
-logging:
-  pattern:
-    level: "%5p [%X{correlationId:-}]"
-  level:
-    org.hibernate.SQL: DEBUG
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     admin:
@@ -62,3 +35,32 @@ logging:
         schema.registry.url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
         auto.register.schemas: true
         avro.use.logical.type.converters: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+
+app:
+  order:
+    expiry-minutes: 30
+  idempotency:
+    ttl-hours: 24
+  outbox:
+    poll-interval-ms: 500
+    batch-size: 100
+    send-timeout-seconds: 15
+  dev-endpoints:
+    enabled: true
+
+logging:
+  pattern:
+    level: "%5p [%X{correlationId:-}]"
+  level:
+    org.hibernate.SQL: DEBUG
